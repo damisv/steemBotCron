@@ -1,0 +1,18 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.sidenav-content {
+  //width: 20%;
+  display: flex;
+  //height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  width: 90%;
+  padding: 5% 2% 2% 5%;
+  height: 80%;
+  overflow: auto;
+}

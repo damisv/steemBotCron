@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logs {
+  max-height: 40vh;
+  overflow: auto;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  max-height: 72vh;
+  height: 72vh;
+}
+.table-container {
+  height: 100%;
+  overflow: auto;
+}

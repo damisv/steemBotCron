@@ -1,0 +1,12 @@
+<mat-card style="height: 50vh;">
+  <mat-card-content style="height: 90%">
+    <div class="shell-wrap">
+      <p class="shell-top-bar">Steemit Auto-Follower started at {{ run.date | date: 'medium' }}</p>
+      <ul class="shell-body" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <ng-template ngFor let-log [ngForOf]="run.logs">
+          <li>{{ log.date | date: 'medium'}}: {{ log.message}}</li>
+        </ng-template>
+      </ul>
+    </div>
+  </mat-card-content>
+</mat-card>

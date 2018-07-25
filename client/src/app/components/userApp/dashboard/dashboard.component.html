@@ -1,0 +1,108 @@
+<mat-card >
+  <mat-card-header>
+    <mat-card-title>Auto-Follower Bot</mat-card-title>
+    <mat-card-subtitle>Toggling it, creates or cancels a job.Use it wisely</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <br>
+      <mat-divider></mat-divider>
+    <br>
+        <mat-grid-list cols="2" rowHeight="1:1">
+          <mat-grid-tile>
+            <div class="flex-container">
+              <div *ngIf="toggleBan"><p>Wait a couple of seconds until toggling again.</p></div>
+              <mat-slide-toggle #jobToggle [disabled]="toggleBan" color="primary" (change)="changeState(jobToggle.checked)" [checked]="isActive">{{ jobToggle.checked ? 'ACTIVE':'INACTIVE' }}</mat-slide-toggle>
+              <mat-list role="list" *ngIf="jobToggle.checked">
+                <h3 mat-subheader>Details</h3>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <h4 mat-line>Last Run at:</h4>
+                  <p mat-line>{{ job?.lastRunAt | date: 'medium' }}</p>
+                </mat-list-item>
+                <mat-list-item>
+                  <h4 mat-line>Next Run at:</h4>
+                  <p mat-line>{{ job?.nextRunAt | date: 'medium'}}</p>
+                </mat-list-item>
+                <mat-list-item>
+                  <h4 mat-line>Last Finished at:</h4>
+                  <p mat-line>{{ job?.lastFinishedAt | date: 'medium' }}</p>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="flex-container">
+              <div *ngIf="logList?.length === 0"><p>No recent runs logged.</p></div>
+              <div *ngIf="logList?.length > 0">
+                <p>Last Runs:</p>
+                <div class="logs" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                  <mat-list>
+                    <ng-template ngFor let-run [ngForOf]="logList" let-i="index">
+                      <mat-list-item
+                        matTooltip="Click to see detailed log"
+                        (click)="openLog(run._id)" class="listItem">
+                        <mat-icon *ngIf="!run.finished" mat-list-icon svgIcon="run_loading"></mat-icon>
+                        <mat-icon *ngIf="run.finished" mat-list-icon>{{ run.errors > 0 ? 'clear': 'check'}}</mat-icon>
+                        <h4 mat-line>{{i+1}}) Auto_follower</h4>
+                        <p mat-line>{{ run.date | date: 'medium'}}</p>
+                      </mat-list-item>
+                    </ng-template>
+                  </mat-list>
+                </div>
+              </div>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+
+<!-- The following HTML code refers to the Material Data Table that had been used in the beginning -->
+
+<!--<div class="table-container mat-elevation-z8">-->
+<!--<table mat-table [dataSource]="dataSource">-->
+
+<!--&lt;!&ndash; Index Column &ndash;&gt;-->
+<!--<ng-container matColumnDef="index">-->
+<!--<th mat-header-cell *matHeaderCellDef> # </th>-->
+<!--<td mat-cell *matCellDef="let element;let i = index;"> {{ i + 1}} </td>-->
+<!--</ng-container>-->
+
+<!--&lt;!&ndash; Job Name Column &ndash;&gt;-->
+<!--<ng-container matColumnDef="jobName">-->
+<!--<th mat-header-cell *matHeaderCellDef> Job Name Given </th>-->
+<!--<td mat-cell *matCellDef="let element"> {{element.data.jobName}} </td>-->
+<!--</ng-container>-->
+
+<!--&lt;!&ndash; Job Column &ndash;&gt;-->
+<!--<ng-container matColumnDef="job">-->
+<!--<th mat-header-cell *matHeaderCellDef> Job </th>-->
+<!--<td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--</ng-container>-->
+
+<!--&lt;!&ndash; Interval Column &ndash;&gt;-->
+<!--<ng-container matColumnDef="interval">-->
+<!--<th mat-header-cell *matHeaderCellDef> Interval </th>-->
+<!--<td mat-cell *matCellDef="let element"> {{element.repeatInterval}} </td>-->
+<!--</ng-container>-->
+
+<!--&lt;!&ndash; Last Run Column &ndash;&gt;-->
+<!--<ng-container matColumnDef="lastRun">-->
+<!--<th mat-header-cell *matHeaderCellDef> Last Run At </th>-->
+<!--<td mat-cell *matCellDef="let element"> {{element.lastRunAt | date:'medium'}} </td>-->
+<!--</ng-container>-->
+
+<!--&lt;!&ndash; Next Run Column &ndash;&gt;-->
+<!--<ng-container matColumnDef="nextRun">-->
+<!--<th mat-header-cell *matHeaderCellDef> Next Run At </th>-->
+<!--<td mat-cell *matCellDef="let element"> {{element.nextRunAt | date:'medium'}} </td>-->
+<!--</ng-container>-->
+
+<!--<tr mat-header-row *matHeaderRowDef="displayedColumns;  sticky: true"></tr>-->
+<!--<tr mat-row *matRowDef="let element; columns: displayedColumns;" (click)="viewLogs(element._id)"></tr>-->
+<!--</table>-->
+
+<!--<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>-->
+<!--</div>-->
+
+
+<!--<a mat-raised-button color="primary" routerLink="/app/new">Add new Job</a>-->
