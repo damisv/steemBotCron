@@ -29,7 +29,10 @@
     "zone.js": "^0.8.26",
     "hammerjs": "^2.0.8",
     "socket.io-client": "^2.1.1",
-    "steem": "^0.7.1"
+    "steem": "^0.7.1",
+    "@angular/cli": "^6.0.8",
+    "@angular/compiler-cli": "^6.0.9",
+    "typescript": "2.7.2"
   },
   "devDependencies": {
     "@angular/cli": "^6.0.8",
