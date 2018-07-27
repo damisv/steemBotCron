@@ -1,6 +1,6 @@
 export class MyJob {
   constructor(public name: string = 'auto_follow',
-              public interval : string = '1 day',
+              public interval : string = '1 hour',
               public data: MyJobData = new MyJobData()) {}
 }
 
