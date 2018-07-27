@@ -44,7 +44,7 @@ export class AuthService {
     });
   }
 
-  private getFollowInfo() {
+  public getFollowInfo() {
     steem.api.getFollowCount(this.user.name, (err: any, result: any) => {
       if (err) return;
       this._followInfo.next({followers: result['follower_count'],

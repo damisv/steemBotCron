@@ -39,6 +39,7 @@ export class LogsService {
       let tempJob = cronService.job;
       tempJob.lastFinishedAt = val.date;
       cronService.job = tempJob;
+      authService.getFollowInfo();
     });
     socketService.onLogReceived().subscribe((val) => {
       const temp = this.logList;
