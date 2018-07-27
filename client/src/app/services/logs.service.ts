@@ -28,7 +28,7 @@ export class LogsService {
       this.logList = temp;
       let tempJob = cronService.job;
       tempJob.lastRunAt = val.run.date;
-      tempJob.nextRunAt = LogsService.addDays(val.run.date, 1);
+      tempJob.nextRunAt = LogsService.addHours(val.run.date, 1);
       cronService.job = tempJob;
     });
     socketService.onEndRun().subscribe(val => {
@@ -50,6 +50,12 @@ export class LogsService {
   private getLogs(acc: Account) {
     this.http.post<{[key: string]: LogRun}>(LogsService.base, {acc: acc})
       .subscribe((val) => this.logList = val);
+  }
+
+  static addHours(date, hours) {
+    let result = new Date(date);
+    result.setHours(result.getHours() + hours);
+    return result;
   }
 
   static addDays(date, days) {
