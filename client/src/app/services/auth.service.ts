@@ -18,6 +18,9 @@ export class AuthService {
 
   public $user = this._user.asObservable();
 
+  private _followInfo = new BehaviorSubject<{followers: number, follows: number}>(null);
+  public followInfo$ = this._followInfo.asObservable();
+
   constructor() {
     steem.api.setOptions({ url: 'https://api.steemit.com' });
   }
@@ -35,8 +38,17 @@ export class AuthService {
           this.user = result[0];
           observer.next(true);
           observer.complete();
+          this.getFollowInfo();
         } catch (error) { observer.error(error); }
       })
+    });
+  }
+
+  private getFollowInfo() {
+    steem.api.getFollowCount(this.user.name, (err: any, result: any) => {
+      if (err) return;
+      this._followInfo.next({followers: result['follower_count'],
+          follows: result['following_count']})
     });
   }
 

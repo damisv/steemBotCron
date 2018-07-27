@@ -7,6 +7,12 @@
     <br>
       <mat-divider></mat-divider>
     <br>
+      <div *ngIf="isActive">
+        <p>Followers: {{followInfo?.followers}} | Following: {{followInfo?.follows}}</p>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+      </div>
         <mat-grid-list cols="2" rowHeight="1:1">
           <mat-grid-tile>
             <div class="flex-container">

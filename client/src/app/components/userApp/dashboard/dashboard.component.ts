@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {Job, LogRun} from "../../../models";
-import {CronJobsService, LogsService} from "../../../services";
+import {AuthService, CronJobsService, LogsService} from "../../../services";
 import {Router} from "@angular/router";
 import {MatIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -14,6 +14,7 @@ import {filter} from "rxjs/operators";
 export class DashboardComponent {
   job: Job;
   logList: LogRun[] = [];
+  followInfo: {followers: number, follows: number};
 
   isActive = false;
   toggleBan = false;
@@ -22,9 +23,11 @@ export class DashboardComponent {
               private iconRegistry: MatIconRegistry,
               private domSanitizer: DomSanitizer,
               private logsService: LogsService,
+              private authService: AuthService,
               private router: Router) {
     iconRegistry.addSvgIcon('run_loading',
       domSanitizer.bypassSecurityTrustResourceUrl('../../../../assets/three-dots.svg'));
+    authService.followInfo$.subscribe(val => this.followInfo = val);
     cronService.job$.pipe(filter(job => job !== null)).subscribe((job) => {
       this.job = job;
       this.isActive = true;
